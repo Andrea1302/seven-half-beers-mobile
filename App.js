@@ -1,12 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native';
+
+import { Button } from 'seven-half-beers'
 
 export default function App() {
+  const press = () => {
+    console.warn('ciaoooo')
+  }
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaView>
+      <Button label="ciao" callback={press} />
+    </SafeAreaView>
   );
 }
 
