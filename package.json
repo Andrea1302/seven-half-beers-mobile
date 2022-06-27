@@ -26,7 +26,12 @@
     "react-native-safe-area-context": "4.2.4",
     "react-native-screens": "~3.11.1",
     "react-native-web": "0.17.7",
+<<<<<<< HEAD
     "seven-half-beers": "^3.1.15"
+=======
+    "seven-half-beers": "^3.1.9",
+    "expo-screen-orientation": "~4.2.0"
+>>>>>>> c689de0264081c4c8c0e087f923e89d144766b72
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
