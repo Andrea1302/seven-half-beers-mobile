@@ -16,7 +16,7 @@
     "react-dom": "17.0.2",
     "react-native": "0.68.2",
     "react-native-web": "0.17.7",
-    "seven-half-beers": "^3.0.9"
+    "seven-half-beers": "^3.1.8"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
