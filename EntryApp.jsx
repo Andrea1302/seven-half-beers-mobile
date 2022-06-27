@@ -1,14 +1,20 @@
-import React from 'react';
+import React,{useEffect} from 'react';
 // modules
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 // components
-// import { Home } from 'seven-half-beers';
+import  {getStorage}  from 'seven-half-beers/dist/utils/asyncStorage';
 import Homepage from './screens/Homepage'
 import Gamepage from './screens/Gamepage'
 
 const EntryApp = () => {
     const Stack = createStackNavigator();
+    useEffect(()=>{
+
+    },[])
+    getUser = async () =>{
+        
+    }
 
     return (
 
