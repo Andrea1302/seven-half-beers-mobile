@@ -14,14 +14,15 @@ const EntryApp = () => {
 
         <NavigationContainer>
             <Stack.Navigator
-                initialRouteName={'Homepage'}
+                initialRouteName={'Gamepage'}
             >
+
                 <Stack.Screen
-                    name='Homepage'
-                    component={Homepage}
+                    name='Game'
+                    component={Gamepage}
                     options={
                         {
-                            title: 'Homepage',
+                            title: 'Gamepage',
                             headerStyle: {
                                 backgroundColor: '#000',
                             },
@@ -35,11 +36,11 @@ const EntryApp = () => {
                 />
 
                 <Stack.Screen
-                    name='Game'
-                    component={Gamepage}
+                    name='Homepage'
+                    component={Homepage}
                     options={
                         {
-                            title: 'Gamepage',
+                            title: 'Homepage',
                             headerStyle: {
                                 backgroundColor: '#000',
                             },
