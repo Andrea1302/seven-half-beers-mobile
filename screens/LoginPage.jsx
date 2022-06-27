@@ -8,9 +8,11 @@ const LoginPage = (props) => {
     // let user = await getStorage('user')
     // console.log(user)
     // }
+
     const goTo = () => {
         props.navigation.navigate('RegistrationPage')
     }
+    
     function login(res) {
 
         if (res.status === 200) {

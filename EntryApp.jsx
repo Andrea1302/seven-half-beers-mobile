@@ -45,7 +45,7 @@ const EntryApp = () => {
                     <Text>Loading...</Text> :
                     <NavigationContainer>
                         <Stack.Navigator
-                            initialRouteName={state.isUserLogged ? 'Homepage' : 'RegistrationPage'}
+                            initialRouteName={state.isUserLogged ? 'Homepage' : 'LoginPage'}
                         >
                             <Stack.Screen
                                 name='Homepage'
