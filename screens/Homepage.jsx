@@ -1,12 +1,23 @@
-import react from "react";
+import React from "react";
 import { Home } from "seven-half-beers";
 
-const Homepage = () => {
+//Storage
+import { removeStorage, getStorage } from "seven-half-beers/dist/utils/asyncStorage";
+
+const Homepage = (props) => {
+
     const navigatTo = (params) => {
-        console.log('params', params)
+        console.log("evviva i parama: ", params)
+        props.navigation.navigate(params)
     }
+
+    const logout = async () => {
+        await removeStorage("user")
+        props.navigation.navigate("LoginPage")
+    }
+
     return (
-        <Home goTo={navigatTo} />
+        <Home goTo={navigatTo} logoutCallback={logout} />
     )
 }
 
