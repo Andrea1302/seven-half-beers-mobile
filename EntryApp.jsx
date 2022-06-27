@@ -45,7 +45,7 @@ const EntryApp = () => {
                     <Text>Loading...</Text> :
                     <NavigationContainer>
                         <Stack.Navigator
-                            initialRouteName={state.isUserLogged ? 'Homepage' : 'LoginPage'}
+                            initialRouteName={state.isUserLogged ? 'Homepage' : 'RegistrationPage'}
                         >
                             <Stack.Screen
                                 name='Homepage'
@@ -81,7 +81,7 @@ const EntryApp = () => {
                                     }
                                 }
                             />
-                            
+
                             <Stack.Screen
                                 name='LobbyPage'
                                 component={LobbyPage}
@@ -118,7 +118,7 @@ const EntryApp = () => {
                                 }
                             />
 
-                        
+
 
                             <Stack.Screen
                                 name='Gamepage'
