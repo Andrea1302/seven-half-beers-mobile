@@ -5,7 +5,7 @@ const LobbyPage = (props) => {
         props.navigation.navigate('Gamepage')
     }
     return (
-        <Lobby startGameCallback={goToGame}/>
+        <Lobby goToGameCallback={goToGame}/>
     )
 }
 export default LobbyPage

@@ -43,6 +43,7 @@ const Gamepage = (props) => {
     }, [])
 
     const getState = (params) => {
+        console.log(params)
         setState({
             ...state,
             propState: params
