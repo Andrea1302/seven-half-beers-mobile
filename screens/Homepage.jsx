@@ -1,13 +1,13 @@
 import React from "react";
 import { Home } from "seven-half-beers";
 
+
 //Storage
 import { removeStorage, getStorage } from "seven-half-beers/dist/utils/asyncStorage";
 
 const Homepage = (props) => {
 
     const navigatTo = (params) => {
-        console.log("evviva i parama: ", params)
         props.navigation.navigate(params)
     }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Login } from "seven-half-beers";
 import { setStorage } from "seven-half-beers/dist/utils/asyncStorage";
-
+import { getUserInfo } from "seven-half-beers/dist/services/api/auth/authApi"
 const LoginPage = (props) => {
     // async function goTo(params) {
     //     console.log(params, 'ciao')
@@ -12,16 +12,12 @@ const LoginPage = (props) => {
     const goTo = () => {
         props.navigation.navigate('RegistrationPage')
     }
-    
-    function login(res) {
 
+    async function login(res) {
         if (res.status === 200) {
-            let infoUser = {
-                info : res.data,
-                token : res.data.token,
-                refreshToken : res.data.refreshToken
-            }
-            setStorage("user",infoUser);
+            let response = await getUserInfo(res.data.id)
+            console.log(response)
+            await setStorage("user", response.data);
             props.navigation.navigate('Homepage')
         }
     }

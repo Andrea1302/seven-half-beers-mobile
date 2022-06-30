@@ -103,7 +103,7 @@ const Gamepage = (props) => {
                     <Text style={{ fontSize: 30, color: "white" }}>Turno: {state.propState.turns}</Text>
                     <View style={{ flexDirection: "row", backgroundColor: "red", flexWrap: "wrap" }}>
                         {
-                            state.propState?.infoGiocatori.map(renderPlayer)
+                            state.propState?.infoGiocatori?.user.map(renderPlayer)
                         }
                     </View>
                 </>

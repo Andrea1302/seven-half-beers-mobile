@@ -12,6 +12,8 @@ import Gamepage from './screens/Gamepage';
 import LoginPage from './screens/LoginPage';
 import RegistrationPage from './screens/RegistrationPage';
 import LobbyPage from './screens/LobbyPage';
+import LeaderboardPage from './screens/LeaderboardPage';
+
 
 
 
@@ -28,8 +30,10 @@ const EntryApp = () => {
     }, [])
     getUser = async () => {
         let newstate = Object.assign({}, state)
-        newstate.loadingPage = true
         let user = await getStorage('user')
+
+        newstate.loadingPage = true;
+
         if (user === undefined) {
             newstate.loadingPage = true
         } else {
@@ -45,7 +49,7 @@ const EntryApp = () => {
                     <Text>Loading...</Text> :
                     <NavigationContainer>
                         <Stack.Navigator
-                            initialRouteName={state.isUserLogged ? 'Homepage' : 'Gamepage'}
+                            initialRouteName={state.isUserLogged ? 'Homepage' : 'LoginPage'}
                         >
                             <Stack.Screen
                                 name='Homepage'
@@ -64,6 +68,25 @@ const EntryApp = () => {
                                     }
                                 }
                             />
+
+                            <Stack.Screen
+                                name='LeaderboardPage'
+                                component={LeaderboardPage}
+                                options={
+                                    {
+                                        title: 'Leaderboard',
+                                        headerStyle: {
+                                            backgroundColor: '#000',
+                                        },
+                                        headerTintColor: '#007AFF',
+                                        headerTitleStyle: {
+                                            fontWeight: 'bold',
+                                            fontSize: 24,
+                                        }
+                                    }
+                                }
+                            />
+
                             <Stack.Screen
                                 name='LoginPage'
                                 component={LoginPage}
