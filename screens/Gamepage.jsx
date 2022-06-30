@@ -11,10 +11,8 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { Animated, Easing } from 'react-native';
 import Lottie from 'lottie-react-native';
 
-
-let turns = 0
-
 const Gamepage = (props) => {
+    const myRoom = props.route.params.roomId
 
     const [state, setState] = useState({
         counterPrevBeer: 71,
@@ -43,7 +41,6 @@ const Gamepage = (props) => {
     }, [])
 
     const getState = (params) => {
-        console.log(params)
         setState({
             ...state,
             propState: params
@@ -93,6 +90,7 @@ const Gamepage = (props) => {
 
     return (
         <Game
+            idRoom={myRoom}
             callback={getState}
             styleChildren={{ width: Dimensions.get("screen").width, }}
             addCard={add}
@@ -102,7 +100,7 @@ const Gamepage = (props) => {
                 state.propState &&
                 <>
                     <Text style={{ fontSize: 30, color: "white" }}>Turno: {state.propState.turns}</Text>
-                    <View style={{ flexDirection: "row", backgroundColor: "red", flexWrap: "wrap" }}>
+                    <View style={{ flexDirection: "row", backgroundColor: "brown", flexWrap: "wrap" }}>
                         {
                             state.propState?.infoGiocatori?.user.map(renderPlayer)
                         }

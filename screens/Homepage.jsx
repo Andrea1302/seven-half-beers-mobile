@@ -7,8 +7,9 @@ import { removeStorage, getStorage } from "seven-half-beers/dist/utils/asyncStor
 
 const Homepage = (props) => {
 
-    const navigatTo = (params) => {
-        props.navigation.navigate(params)
+    const navigatTo = (params, idLobby) => {
+        console.log(params,'idLobby',idLobby)
+        props.navigation.navigate(params, { roomId : idLobby })
     }
 
     const logout = async () => {
