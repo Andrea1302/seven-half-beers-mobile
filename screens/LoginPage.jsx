@@ -15,9 +15,19 @@ const LoginPage = (props) => {
 
     async function login(res) {
         if (res.status === 200) {
+            console.log(res.data.token, 'res from login')
             let response = await getUserInfo(res.data.id)
-            console.log(response)
-            await setStorage("user", response.data);
+            let user = {
+                "email": res.data.email,
+                "id": res.data.id,
+                "online": response.data.online,
+                "password": null,
+                "refreshToken": res.data.refreshToken,
+                "score": response.data.score,
+                "token": res.data.token,
+                "username": response.data.username,
+            }
+            await setStorage("user", user);
             props.navigation.navigate('Homepage')
         }
     }

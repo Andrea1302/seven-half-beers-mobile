@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Home } from "seven-half-beers";
+import { ActivityIndicator, Text } from 'react-native'
 
 
 //Storage
 import { removeStorage, getStorage } from "seven-half-beers/dist/utils/asyncStorage";
 
+let prova = 2;
 const Homepage = (props) => {
-
+    const [state, setState] = useState({
+        userData: undefined
+    })
+    useEffect(() => {
+        userInfo()
+    }, [])
+    const userInfo = async () => {
+        let user = await getStorage('user')
+        setState({
+            userData: user
+        })
+    }
     const navigatTo = (params, idLobby) => {
-        console.log(params,'idLobby',idLobby)
-        props.navigation.navigate(params, { roomId : idLobby })
+        console.log(params, 'idLobby', idLobby)
+        props.navigation.navigate(params, { roomId: idLobby })
     }
 
     const logout = async () => {
@@ -18,7 +31,15 @@ const Homepage = (props) => {
     }
 
     return (
-        <Home goTo={navigatTo} logoutCallback={logout} />
+        <>
+            {
+                state.userData === undefined ?
+                    <ActivityIndicator></ActivityIndicator> :
+                    <Home mobileUser={state.userData} goTo={navigatTo} logoutCallback={logout} />
+
+            }
+        </>
+
     )
 }
 

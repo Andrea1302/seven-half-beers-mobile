@@ -9,7 +9,19 @@ const RegistrationPage = (props) => {
     const register = async (responseUser, responseLogin) => {
          if (responseLogin.status === 200) {
             let response = await getUserInfo(responseLogin.data.id)
-            await setStorage("user", response.data);
+
+            let user = {
+                "email": responseLogin.data.email,
+                "id": responseLogin.data.id,
+                "online": response.data.online,
+                "password": null,
+                "refreshToken": responseLogin.data.refreshToken,
+                "score": response.data.score,
+                "token": responseLogin.data.token,
+                "username": response.data.username,
+            }
+
+            await setStorage("user", user);
             props.navigation.navigate('Homepage')
         } else if ((responseUser.status === 200) && (responseLogin.status !== 200)) {
             props.navigation.navigate('LoginPage')

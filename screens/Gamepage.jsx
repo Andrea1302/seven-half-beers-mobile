@@ -11,8 +11,12 @@ import * as ScreenOrientation from 'expo-screen-orientation';
 import { Animated, Easing } from 'react-native';
 import Lottie from 'lottie-react-native';
 
+import { sendMessageToWs, listenToWs } from 'seven-half-beers/dist/services/genericSocket'
+
+
 const Gamepage = (props) => {
     const myRoom = props.route.params.roomId
+    const myId = props.route.params.myId
 
     const [state, setState] = useState({
         counterPrevBeer: 71,
@@ -34,11 +38,7 @@ const Gamepage = (props) => {
 
     }, [state.counterLiter])
 
-    useEffect(() => {
-        /*        (async () => {
-                   await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.LANDSCAPE_LEFT);
-               })() */
-    }, [])
+  
 
     const getState = (params) => {
         setState({
@@ -90,6 +90,7 @@ const Gamepage = (props) => {
 
     return (
         <Game
+            myIdProp={myId}
             idRoom={myRoom}
             callback={getState}
             styleChildren={{ width: Dimensions.get("screen").width, }}
