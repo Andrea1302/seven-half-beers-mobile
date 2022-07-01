@@ -5,14 +5,22 @@ import { ActivityIndicator, Text } from 'react-native'
 
 const LobbyPage = (props) => {
     const lobbyId = props.route.params.roomId;
+    const playerList = props.route.params.playerList
+
+    console.log("PANICO PAURA: ", props.route.params.playerList)
+
     const [state, setState] = useState({
-        userData: undefined
+        userData: undefined,
+        players: playerList
     })
+
     useEffect(() => {
         userInfo()
     }, [])
+
     const userInfo = async () => {
         let user = await getStorage('user')
+        console.log("user: ", user)
         setState({
             ...state,
             userData: user
@@ -30,7 +38,7 @@ const LobbyPage = (props) => {
                 state.userData === undefined ?
                     <ActivityIndicator></ActivityIndicator> :
 
-                    <Lobby mobileUser={state.userData} goToGameCallback={goToGame} />
+                    <Lobby mobileUser={state.userData} listPlayers={state.players} goToGameCallback={goToGame} />
             }
         </>
     )

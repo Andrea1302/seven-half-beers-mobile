@@ -38,7 +38,7 @@ const Gamepage = (props) => {
 
     }, [state.counterLiter])
 
-  
+
 
     const getState = (params) => {
         setState({
