@@ -9,7 +9,7 @@ import { socket as WS } from 'seven-half-beers/dist/services/configSocket'
 let token;
 let id;
 let lobby;
-let idL = 45;
+let idL = 82;
 
 const LobbyPage = (props) => {
 
@@ -44,7 +44,7 @@ const LobbyPage = (props) => {
                     dataFromServer: lobby
                 })
             } else {
-                //props.navigation.navigate('Gamepage', { myIdProps: id })
+                props.navigation.navigate('Gamepage', { myIdProps: id })
                 console.log("Era qui l'errore?")
             }
 
@@ -193,6 +193,10 @@ const LobbyPage = (props) => {
         console.log('sended', message)
     }
 
+    WS.onclose = (event) => {
+        console.log(event)
+    }
+
     //Function render lobby players
     const renderPlayer = (player, key) => {
         return (
@@ -232,12 +236,12 @@ const LobbyPage = (props) => {
 
     //Check if the error was here, my darling
     const startGame = () => {
-        props.navigation.navigate('Gamepage', { myIdProps: id })
-        /* const message = {
-            user_id: id,
+        const message = {
+            user_id: myId,
             method: "startMatch"
         }
-        sendMessage(message);*/
+        sendMessage(message);
+        props.navigation.navigate('Gamepage', { myIdProps: id })
     }
 
     return (

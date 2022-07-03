@@ -48,6 +48,7 @@ const EntryApp = () => {
                         <Stack.Navigator
                             initialRouteName={state.isUserLogged ? 'Homepage' : 'LoginPage'}
                         >
+
                             <Stack.Screen
                                 name='Homepage'
                                 component={Homepage}

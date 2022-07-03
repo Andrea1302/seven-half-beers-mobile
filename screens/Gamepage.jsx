@@ -53,26 +53,31 @@ const Gamepage = (props) => {
     }, [WS.onmessage])
 
 
-    useEffect(() => {
-        console.log("ciao, sono dentro il didMount del game")
-        WS.onopen = () => {
-            console.log("CONNECTED");
-        }
-        setTimeout(() => {
+    // useEffect(() => {
+    //     console.log("ciao, sono dentro il didMount del game")
+    //     WS.onopen = () => {
+    //         console.log("CONNECTED");
+    //     }
+    //     setTimeout(() => {
 
-            const message = {
-                user_id: myId,
-                method: "startMatch"
-            }
-            sendMessage(message);
+    //         const message = {
+    //             user_id: myId,
+    //             method: "startMatch"
+    //         }
+    //         sendMessage(message);
 
-        }, 1000);
+    //     }, 1000);
 
-        return () => {
-            WS.close()
-        }
-    }, [])
+    //     return () => {
+    //         WS.close()
+    //     }
+    // }, [])
 
+
+
+    WS.onclose = (event) => {
+        console.log(event)
+    }
 
     // send message 
     const sendMessage = (message) => {
@@ -130,13 +135,13 @@ const Gamepage = (props) => {
             method: "requestCard"
         }
         sendMessage(message)
-        // setTimeout(() => {
-        //     const message = {
-        //         user_id: myId,
-        //         method: "checkEndMatch",
-        //     }
-        //     sendMessage(message)
-        // }, 200);
+        setTimeout(() => {
+            const message = {
+                user_id: myId,
+                method: "checkEndMatch",
+            }
+            sendMessage(message)
+        }, 200);
     }
 
 
@@ -149,13 +154,13 @@ const Gamepage = (props) => {
             method: "stopPlaying"
         }
         sendMessage(message);
-        // setTimeout(() => {
-        //     const message = {
-        //         user_id: myId,
-        //         method: "checkEndMatch",
-        //     }
-        //     sendMessage(message)
-        // }, 100);
+        setTimeout(() => {
+            const message = {
+                user_id: myId,
+                method: "checkEndMatch",
+            }
+            sendMessage(message)
+        }, 100);
         setState({
             ...state,
             frame: 71
@@ -222,6 +227,13 @@ const Gamepage = (props) => {
                     <View>
                         <Text>Please wait your turn or the end of game</Text>
                         <Button label="Quit match" callback={quitMatch} />
+                        <Button label="Quit match" callback={()=>sendMessage(
+                            {
+                                user_id: myId,
+                                method: "requestCard"
+                            }
+                        )} />
+
 
                     </View>
 
