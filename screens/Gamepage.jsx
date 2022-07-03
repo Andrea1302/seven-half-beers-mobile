@@ -48,6 +48,7 @@ const Gamepage = (props) => {
             }
             let index = lobby?.hands.findIndex(el => el?.turn === true)
 
+
             console.log('index', index)
             let myTurn = checkMyTurn(lobby, index, myId);
             let variable = valueLogicLottie(lobby, index);
@@ -63,6 +64,7 @@ const Gamepage = (props) => {
                 myIndex: index
             })
         }
+
     }, [WS.onmessage])
 
 
@@ -112,7 +114,7 @@ const Gamepage = (props) => {
                     alignItems: "center"
                 }}>
                 <Lottie
-                    ref={el => myRef.current[state.myIndex] = el}
+                    ref={el => myRef.current[key] = el}
                     source={require('../assets/lottie/beer.json')}
                     style={{ height: 50 }}
                     loop={false}

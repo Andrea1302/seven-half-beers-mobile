@@ -9,7 +9,7 @@ import { socket as WS } from 'seven-half-beers/dist/services/configSocket'
 let token;
 let id;
 let lobby;
-let idL = 89;
+let idL = 111;
 
 const LobbyPage = (props) => {
 
@@ -45,7 +45,6 @@ const LobbyPage = (props) => {
                 })
             } else {
                 props.navigation.navigate('Gamepage', { myIdProps: id })
-                console.log("Era qui l'errore?")
             }
 
         }
@@ -190,7 +189,7 @@ const LobbyPage = (props) => {
     }
 
     WS.onclose = (event) => {
-        console.log(event)
+        console.log("WS:", WS)
     }
 
     //Function render lobby players
