@@ -43,6 +43,8 @@ const Gamepage = (props) => {
                     isFinishGame: true,
                     winners: lobby.winners
                 })
+                WS.close()
+                return
             }
             let index = lobby?.hands.findIndex(el => el?.turn === true)
 
@@ -87,7 +89,7 @@ const Gamepage = (props) => {
 
 
     WS.onclose = (event) => {
-        console.log(event)
+        console.log(event, 'event')
     }
 
     // send message 
@@ -110,9 +112,9 @@ const Gamepage = (props) => {
                     alignItems: "center"
                 }}>
                 <Lottie
-                    ref={el => myRef.current[key] = el}
+                    ref={el => myRef.current[state.myIndex] = el}
                     source={require('../assets/lottie/beer.json')}
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ height: 50 }}
                     loop={false}
                 />
                 {
@@ -208,7 +210,7 @@ const Gamepage = (props) => {
                     >
 
 
-                        <View style={{ backgroundColor: "brown", alignItems: 'center', width: 150, paddingVertical: 20 }}>
+                        <View style={{ backgroundColor: "brown", alignItems: 'center', width: 150, paddingVertical: 20, flexDirection: 'row', }}>
                             {
                                 state?.dataFromServer?.hands.map(renderPlayer)
                             }
@@ -253,14 +255,14 @@ const Gamepage = (props) => {
                         }
 
                     </ImageBackground > :
-                    <View style={{ height: Dimensions.get('screen').height,alignItems:'center',justifyContent:'center' }}>
+                    <View style={{ height: Dimensions.get('screen').height, alignItems: 'center', justifyContent: 'center' }}>
                         {
                             state?.winners?.map((player, key) => {
                                 return (
                                     <View key={key}>
                                         <Lottie
                                             source={require('../assets/lottie/winner.json')}
-                                            style={{height: 200 }}
+                                            style={{ height: 200 }}
                                             loop={true}
                                             autoPlay={true}
                                         />
