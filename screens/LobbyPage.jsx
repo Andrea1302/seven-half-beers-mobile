@@ -237,7 +237,7 @@ const LobbyPage = (props) => {
     //Check if the error was here, my darling
     const startGame = () => {
         const message = {
-            user_id: myId,
+            user_id: id,
             method: "startMatch"
         }
         sendMessage(message);

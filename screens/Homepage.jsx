@@ -23,7 +23,7 @@ const Homepage = (props) => {
     const navigatTo = (params) => {
 
         if (params === 'LeaderboardPage') {
-            props.navigation.navigate(params, { playerList: state.userData.id })
+            props.navigation.navigate(params, { playerList: state.userData })
 
         } else {
             props.navigation.navigate(params)
