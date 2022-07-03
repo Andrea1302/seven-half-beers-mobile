@@ -9,7 +9,7 @@ import { socket as WS } from 'seven-half-beers/dist/services/configSocket'
 let token;
 let id;
 let lobby;
-let idL = 82;
+let idL = 89;
 
 const LobbyPage = (props) => {
 
@@ -113,7 +113,6 @@ const LobbyPage = (props) => {
                         method: "connectLobby"
                     }
                     sendMessage(message);
-                    connectionEstablished = true;
                 }
 
             }, 1000);
@@ -149,7 +148,6 @@ const LobbyPage = (props) => {
             randomLobby(token, -1).then((response) => {
                 console.log('response.data', response.data)
                 lobby = response.data
-                connectionEstablished = false;
                 setTimeout(() => {
                     if (lobby != null && WS != null) {
                         const message = {
@@ -157,7 +155,6 @@ const LobbyPage = (props) => {
                             method: "connectLobby"
                         }
                         sendMessage(message);
-                        connectionEstablished = true;
                     }
 
                 }, 1000);
@@ -176,7 +173,6 @@ const LobbyPage = (props) => {
                             method: "connectLobby"
                         }
                         sendMessage(message);
-                        connectionEstablished = true;
                     }
                     setState({
                         ...state,

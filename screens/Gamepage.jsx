@@ -37,6 +37,7 @@ const Gamepage = (props) => {
             console.log('onmessage', JSON.parse(event.data));
             let lobby = JSON.parse(event.data)
             if (lobby?.winners?.length > 0) {
+                console.log('lobby', lobby.winners)
                 setState({
                     ...state,
                     isFinishGame: true,
@@ -108,13 +109,12 @@ const Gamepage = (props) => {
                     marginBottom: 20,
                     alignItems: "center"
                 }}>
-                {/* <Lottie
+                <Lottie
                     ref={el => myRef.current[key] = el}
                     source={require('../assets/lottie/beer.json')}
-                    //progress={animationProgress.current}
                     style={{ width: "100%", height: "100%" }}
                     loop={false}
-                /> */}
+                />
                 {
                     player?.cards?.length >= 1 ?
                         <>
@@ -253,10 +253,21 @@ const Gamepage = (props) => {
                         }
 
                     </ImageBackground > :
-                    <View>
+                    <View style={{ height: Dimensions.get('screen').height,alignItems:'center',justifyContent:'center' }}>
                         {
                             state?.winners?.map((player, key) => {
-                                <Text key={key + 1000}>The winner is / are : {player.username}</Text>
+                                return (
+                                    <View key={key}>
+                                        <Lottie
+                                            source={require('../assets/lottie/winner.json')}
+                                            style={{height: 200 }}
+                                            loop={true}
+                                            autoPlay={true}
+                                        />
+
+                                        <Text style={{ color: '#000' }} key={key + 1000}>The winner is / are : {player.username}</Text>
+                                    </View>
+                                )
                             })
                         }
                     </View>
