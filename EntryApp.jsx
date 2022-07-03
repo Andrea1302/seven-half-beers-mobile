@@ -89,6 +89,7 @@ const EntryApp = () => {
                                 name='LoginPage'
                                 component={LoginPage}
                                 options={
+                                    
                                     {
                                         title: 'LoginPage',
                                         headerStyle: {

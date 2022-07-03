@@ -9,7 +9,7 @@ export default function App() {
   return (
 
     <SafeAreaView style={styleApp.container}>
-      <StatusBar style="light" />
+      <StatusBar   style="light" />
       <EntryApp />
     </SafeAreaView>
   );

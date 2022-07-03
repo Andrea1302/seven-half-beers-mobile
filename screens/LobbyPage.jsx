@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from "react";
-import { View, Text, Dimensions, ActivityIndicator, Alert } from 'react-native'
+import { View, Text, Dimensions, ActivityIndicator, Alert, TextInput } from 'react-native'
 import { Button } from "seven-half-beers";
 import { createLobby, deleteLobby, randomLobby } from "seven-half-beers/dist/services/api/lobby/lobbyApi";
 import { getStorage } from "seven-half-beers/dist/utils/asyncStorage";
@@ -9,8 +9,7 @@ import { socket as WS } from 'seven-half-beers/dist/services/configSocket'
 let token;
 let id;
 let lobby;
-let idL = 111;
-
+let lobbyToSearch;
 const LobbyPage = (props) => {
 
     //iife
@@ -102,7 +101,8 @@ const LobbyPage = (props) => {
 
     //Function join a lobby
     const search = () => {
-        randomLobby(token, idL).then((response) => {
+        console.log('lobbytisearch')
+        randomLobby(token, lobbyToSearch).then((response) => {
             console.log('response.data', response.data)
             lobby = response.data
             setTimeout(() => {
@@ -120,7 +120,6 @@ const LobbyPage = (props) => {
                 createdLobby: true
             })
         }).catch((err) => {
-            console.log(err)
             Alert.alert('You are already inside one Lobby, redirecting to lobby')
             setTimeout(() => {
                 if (WS != null) {
@@ -162,7 +161,6 @@ const LobbyPage = (props) => {
                     createdLobby: true
                 })
             }).catch((err) => {
-                console.log(err)
                 Alert.alert('You are already inside one Lobby, please quit from here if you want to change it')
 
                 setTimeout(() => {
@@ -185,11 +183,10 @@ const LobbyPage = (props) => {
     }
     const sendMessage = (message) => {
         WS.send(JSON.stringify(message));
-        console.log('sended', message)
     }
 
     WS.onclose = (event) => {
-        console.log("WS:", WS)
+        console.log("WS:", event)
     }
 
     //Function render lobby players
@@ -239,6 +236,11 @@ const LobbyPage = (props) => {
         props.navigation.navigate('Gamepage', { myIdProps: id })
     }
 
+    const selectLobby = (e) => {
+
+        lobbyToSearch = parseInt(e)
+    }
+
     return (
         <>
             <View style={{ backgroundColor: '#61B5D9', height: Dimensions.get('screen').height, paddingVertical: 20 }}>
@@ -248,7 +250,12 @@ const LobbyPage = (props) => {
                         <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 36, color: '#fff' }}>EMPTY LOBBY</Text>
                         <Button label="crea lobby" callback={create} />
                         <Button label="random lobby" callback={randomLobbyF} />
-                        <Button label="searclobby" callback={search} />
+                        <View style={{ alignItems: 'center', marginVertical: 36 }}>
+                            <TextInput placeholder={'Insert ID Lobby'} onChangeText={selectLobby} style={{ width: 200, backgroundColor: '#fff', padding: 10 }} />
+                            <Button label="searclobby" callback={search} />
+                        </View>
+
+
 
 
                     </> :
@@ -268,8 +275,6 @@ const LobbyPage = (props) => {
                             state.dataFromServer?.users?.length > 1 ?
                                 <>
                                     <Button label="Quit" callback={quitLobby} />
-                                    {/* <Button styleCustom={{ width: 100, backgroundColor: '#4F8CAB', alignItems: 'center', padding: 10, borderRadius: 5 }} label='Card' callback={card} />
-                                    <Button styleCustom={{ width: 100, backgroundColor: '#4F8CAB', alignItems: 'center', padding: 10, borderRadius: 5 }} label='Stop' callback={stop} /> */}
                                 </>
                                 :
                                 <Button label="Delete Lobby" callback={quitYourLobby} />

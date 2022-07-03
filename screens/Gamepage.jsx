@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Dimensions, Text, View, Alert, ImageBackground } from "react-native"
+import { Dimensions, Text, View, FlatList, ImageBackground, ScrollView } from "react-native"
 
 //Library
 import { Game, Button } from "seven-half-beers";
@@ -22,22 +22,21 @@ const Gamepage = (props) => {
         counter: 0,
         frame: 71,
         isMyTurn: false,
-        myIndex: undefined,
+        turnIndex: undefined,
         isFinishGame: false,
-        winners: undefined
+        winners: undefined,
+        myIndexInArray: undefined
     })
 
     const myRef = useRef([])
 
 
     useEffect(() => {
-        console.log("ciao, sono dentro il didUpdate del game")
         WS.onmessage = (event) => {
 
             console.log('onmessage', JSON.parse(event.data));
             let lobby = JSON.parse(event.data)
             if (lobby?.winners?.length > 0) {
-                console.log('lobby', lobby.winners)
                 setState({
                     ...state,
                     isFinishGame: true,
@@ -47,48 +46,23 @@ const Gamepage = (props) => {
                 return
             }
             let index = lobby?.hands.findIndex(el => el?.turn === true)
+            let myIndex = lobby?.hands.findIndex(el => el?.user.id === myId)
 
-
-            console.log('index', index)
             let myTurn = checkMyTurn(lobby, index, myId);
             let variable = valueLogicLottie(lobby, index);
 
             myRef?.current[index]?.play(state.frame, state.frame + variable)
-
-
             setState({
                 ...state,
-                frame: state.frame + variable,
+                frame: lobby?.hands[index].cardValue > 7.5 ? 71 : state.frame + variable,
                 dataFromServer: lobby,
                 isMyTurn: myTurn,
-                myIndex: index
+                turnIndex: index,
+                myIndexInArray: myIndex
             })
         }
 
     }, [WS.onmessage])
-
-
-    // useEffect(() => {
-    //     console.log("ciao, sono dentro il didMount del game")
-    //     WS.onopen = () => {
-    //         console.log("CONNECTED");
-    //     }
-    //     setTimeout(() => {
-
-    //         const message = {
-    //             user_id: myId,
-    //             method: "startMatch"
-    //         }
-    //         sendMessage(message);
-
-    //     }, 1000);
-
-    //     return () => {
-    //         WS.close()
-    //     }
-    // }, [])
-
-
 
     WS.onclose = (event) => {
         console.log(event, 'event')
@@ -97,7 +71,6 @@ const Gamepage = (props) => {
     // send message 
     const sendMessage = (message) => {
         WS.send(JSON.stringify(message));
-        console.log('sended', message)
         setState({
             ...state,
             counter: state.counter + 1
@@ -110,37 +83,60 @@ const Gamepage = (props) => {
             <View
                 key={key}
                 style={{
-                    marginBottom: 20,
-                    alignItems: "center"
+                    alignItems: "center",
+                    marginHorizontal: 10,
+                    borderRightColor :'#fff',
+                    borderRightWidth : 2,
+                    paddingRight : 20
                 }}>
-                <Lottie
+                {/* <Lottie
                     ref={el => myRef.current[key] = el}
                     source={require('../assets/lottie/beer.json')}
                     style={{ height: 50 }}
                     loop={false}
-                />
+                /> */}
                 {
                     player?.cards?.length >= 1 ?
-                        <>
+                        <View style={{ flexDirection: 'row' }}>
+
                             {
                                 player.cards.map(renderCards)
                             }
-                        </>
+                        </View>
                         :
 
-                        <Text>0</Text>
+                        <Text style={{ color: '#fff', fontWeight: 'bold' }}>0</Text>
                 }
-                <Text>{player?.user?.username}</Text>
-                <Text>Total : {player?.cardValue}</Text>
+                <Text style={{ color: '#fff', fontWeight: 'bold' }}>{player?.user?.username}</Text>
+                <>
+                    {
+                        parseInt(player.cardValue) > 7.5 ?
+                            <Text style={{ color: '#fff', fontWeight: 'bold' }}>is Drunk</Text> :
+                            <Text style={{ color: '#fff', fontWeight: 'bold' }}>Total : {player?.cards?.length > 0 ? parseInt(player?.cardValue) - parseInt(player?.cards[0]?.value) : 0}</Text>
+                    }
+                </>
+
             </View>
         )
     }
 
     // function to render all draw cards 
     const renderCards = (card, key) => {
-        return (
-            <Text key={key + 100}>{card.value}</Text>
-        )
+        if (key === 0) {
+            return (
+
+                <Text style={{ color: '#fff', fontWeight: 'bold' }} key={key + 100}>First : ?  </Text>
+            )
+        } else if (key === 1) {
+            return (
+                <Text style={{ color: '#fff', fontWeight: 'bold' }} key={key + 100}>Other Liters :  {card.value}  |</Text>
+            )
+        } else {
+            return (
+                <Text style={{ color: '#fff', fontWeight: 'bold' }} key={key + 100}>  {card.value}  |</Text>
+            )
+        }
+
     }
 
     const card = () => {
@@ -205,18 +201,21 @@ const Gamepage = (props) => {
             {
                 !state.isFinishGame ?
                     <ImageBackground
-                        source={{ uri: 'https://i.gifer.com/OfmI.gif' }} style={{
+                        source={{ uri: 'https://i.gifer.com/OfmI.gif' }}
+                        style={{
                             height: Dimensions.get('screen').height,
                             width: Dimensions.get('screen').width,
                         }}
                     >
 
-
-                        <View style={{ backgroundColor: "brown", alignItems: 'center', width: 150, paddingVertical: 20, flexDirection: 'row', }}>
-                            {
-                                state?.dataFromServer?.hands.map(renderPlayer)
-                            }
+                        <View style={{ backgroundColor: "rgba(61, 52, 25, 0.6)", paddingVertical: 20 }}>
+                            <ScrollView con horizontal={true} >
+                                {
+                                    state?.dataFromServer?.hands.map(renderPlayer)
+                                }
+                            </ScrollView>
                         </View>
+
                         {
                             state.isMyTurn ?
                                 <>
@@ -226,14 +225,15 @@ const Gamepage = (props) => {
                                         justifyContent: 'center',
                                     }}>
                                         <Lottie
-                                            ref={el => myRef.current[state.myIndex] = el}
+                                            ref={el => myRef.current[state.myIndexInArray] = el}
                                             source={require('../assets/lottie/beer.json')}
-                                            style={{ width: 100, height: 100 }}
+                                            style={{ width: 100, height: 100 ,backgroundColor:'rgba(61, 52, 25, 0.6)'}}
                                             loop={false}
                                         />
+                                        <Text style={{ color: '#fff', fontWeight: 'bold' }}>{state?.dataFromServer?.hands[state?.myIndexInArray]?.cardValue}</Text>
                                     </View>
 
-                                    <View style={{ flexDirection: 'row', position: 'absolute', bottom: 150 }}>
+                                    <View style={{ flexDirection: 'row',  bottom: 150,justifyContent:'center' }}>
 
                                         <Button label="Stop" callback={stop} />
                                         <Button label="Carta" callback={card} />
@@ -241,17 +241,9 @@ const Gamepage = (props) => {
 
                                     </View>
                                 </> :
-                                <View>
-                                    <Text>Please wait your turn or the end of game</Text>
+                                <View style={{flex:.8,justifyContent:'flex-end'}}>
+                                    <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>Please wait your turn or the end of the game</Text>
                                     <Button label="Quit match" callback={quitMatch} />
-                                    <Button label="Quit match" callback={() => sendMessage(
-                                        {
-                                            user_id: myId,
-                                            method: "requestCard"
-                                        }
-                                    )} />
-
-
                                 </View>
 
                         }

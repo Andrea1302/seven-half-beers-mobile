@@ -10,7 +10,6 @@ const LoginPage = (props) => {
 
     async function login(res) {
         if (res.status === 200) {
-            console.log(res.data.token, 'res from login')
             let response = await getUserInfo(res.data.id)
             let user = {
                 "email": res.data.email,
