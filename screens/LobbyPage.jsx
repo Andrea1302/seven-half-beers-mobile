@@ -9,7 +9,7 @@ import { socket as WS } from 'seven-half-beers/dist/services/configSocket'
 let token;
 let id;
 let lobby;
-let idL = 41;
+let idL = 44;
 
 const LobbyPage = (props) => {
     (async () => {
@@ -22,27 +22,33 @@ const LobbyPage = (props) => {
         createdLobby: false,
     })
     useEffect(() => {
-        WS.onopen = () => {
-            console.log("CONNECTED");
+
+        console.log("ciao, sono dentro il didMount dellalobby")
+        /*   WS.onopen = () => {
+              console.log("CONNECTED");
+          } */
+
+        WS.onmessage = (event) => {
+
+            console.log('onmessage', JSON.parse(event.data));
+            lobby = JSON.parse(event.data)
+            if (lobby.hasOwnProperty('idLobby')) {
+                setState({
+                    ...state,
+                    dataFromServer: lobby
+                })
+            } else {
+                props.navigation.navigate('Gamepage', { myIdProps: id })
+            }
+
         }
+        
         // return () => {
         //     WS.close()
         // }
 
     }, [])
-    WS.onmessage = (event) => {
-        console.log('onmessage', JSON.parse(event.data));
-        lobby = JSON.parse(event.data)
-        if (lobby.hasOwnProperty('idLobby')) {
-            setState({
-                ...state,
-                dataFromServer: lobby
-            })
-        } else {
-            props.navigation.navigate('Gamepage', { myIdProps: id })
-        }
 
-    }
 
     const create = () => {
         if (!state.createdLobby) {

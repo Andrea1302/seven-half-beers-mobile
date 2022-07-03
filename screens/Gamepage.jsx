@@ -27,6 +27,7 @@ const Gamepage = (props) => {
 
     const myRef = useRef([])
     useEffect(() => {
+        console.log("ciao, sono dentro il didUpdate del game")
         WS.onmessage = (event) => {
             console.log('onmessage', JSON.parse(event.data));
             let lobby = JSON.parse(event.data)
@@ -47,9 +48,10 @@ const Gamepage = (props) => {
                 myIndex: index
             })
         }
-    }, [state.counter])
+    }, [WS.onmessage])
 
     useEffect(() => {
+        console.log("ciao, sono dentro il didMount del game")
         WS.onopen = () => {
             console.log("CONNECTED");
         }
