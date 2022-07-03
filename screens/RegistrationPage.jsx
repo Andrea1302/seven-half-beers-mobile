@@ -6,8 +6,9 @@ import { setStorage } from "seven-half-beers/dist/utils/asyncStorage";
 import { getUserInfo } from "seven-half-beers/dist/services/api/auth/authApi"
 
 const RegistrationPage = (props) => {
+
     const register = async (responseUser, responseLogin) => {
-         if (responseLogin.status === 200) {
+        if (responseLogin.status === 200) {
             let response = await getUserInfo(responseLogin.data.id)
 
             let user = {
@@ -29,9 +30,14 @@ const RegistrationPage = (props) => {
             alert('error')
         }
 
+        //Function Go To Login
+        const goTo = () => {
+            props.navigation.navigate("Login")
+        }
+
     }
     return (
-        <Registration callback={register} />
+        <Registration callback={register} goToLogin={goTo} />
     )
 }
 
