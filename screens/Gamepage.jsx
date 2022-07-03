@@ -26,6 +26,8 @@ const Gamepage = (props) => {
     })
 
     const myRef = useRef([])
+
+
     useEffect(() => {
         console.log("ciao, sono dentro il didUpdate del game")
         WS.onmessage = (event) => {
@@ -50,6 +52,7 @@ const Gamepage = (props) => {
         }
     }, [WS.onmessage])
 
+
     useEffect(() => {
         console.log("ciao, sono dentro il didMount del game")
         WS.onopen = () => {
@@ -63,12 +66,13 @@ const Gamepage = (props) => {
             }
             sendMessage(message);
 
-
         }, 1000);
+
         return () => {
             WS.close()
         }
     }, [])
+
 
     // send message 
     const sendMessage = (message) => {
@@ -175,6 +179,8 @@ const Gamepage = (props) => {
         }, 100);
         props.navigation.navigate('Homepage')
     }
+
+    //JSX Return
     return (
         <ImageBackground
             source={{ uri: 'https://i.gifer.com/OfmI.gif' }} style={{

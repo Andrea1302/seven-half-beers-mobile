@@ -9,18 +9,24 @@ import { socket as WS } from 'seven-half-beers/dist/services/configSocket'
 let token;
 let id;
 let lobby;
-let idL = 44;
+let idL = 45;
 
 const LobbyPage = (props) => {
+
+    //iife
     (async () => {
         let user = await getStorage('user')
         token = user?.token
         id = user.id
     })()
+
+
     const [state, setState] = useState({
         dataFromServer: undefined,
         createdLobby: false,
     })
+
+    //DidMount
     useEffect(() => {
 
         console.log("ciao, sono dentro il didMount dellalobby")
@@ -38,18 +44,19 @@ const LobbyPage = (props) => {
                     dataFromServer: lobby
                 })
             } else {
-                props.navigation.navigate('Gamepage', { myIdProps: id })
+                //props.navigation.navigate('Gamepage', { myIdProps: id })
+                console.log("Era qui l'errore?")
             }
 
         }
-        
+
         // return () => {
         //     WS.close()
         // }
 
     }, [])
 
-
+    //Function create a lobby
     const create = () => {
         if (!state.createdLobby) {
             createLobby(token).then((response) => {
@@ -65,10 +72,12 @@ const LobbyPage = (props) => {
                     }
 
                 }, 1000);
+
                 setState({
                     ...state,
                     createdLobby: true
                 })
+
             }).catch(() => {
                 Alert.alert('You are already inside one Lobby, please quit from here if you want to create it')
 
@@ -80,6 +89,7 @@ const LobbyPage = (props) => {
                         }
                         sendMessage(message);
                     }
+
                     setState({
                         ...state,
                         createdLobby: true,
@@ -91,6 +101,7 @@ const LobbyPage = (props) => {
         }
     }
 
+    //Function join a lobby
     const search = () => {
         randomLobby(token, idL).then((response) => {
             console.log('response.data', response.data)
@@ -112,7 +123,7 @@ const LobbyPage = (props) => {
             })
         }).catch((err) => {
             console.log(err)
-            Alert.alert('You are already inside one Lobby, please quit from here if you want to change it')
+            Alert.alert('You are already inside one Lobby, redirecting to lobby')
             setTimeout(() => {
                 if (WS != null) {
                     const message = {
@@ -131,6 +142,8 @@ const LobbyPage = (props) => {
         })
 
     }
+
+    //Function join a random lobby
     const randomLobbyF = () => {
         if (!state.createdLobby) {
             randomLobby(token, -1).then((response) => {
@@ -180,6 +193,7 @@ const LobbyPage = (props) => {
         console.log('sended', message)
     }
 
+    //Function render lobby players
     const renderPlayer = (player, key) => {
         return (
             <View key={key} style={{ borderColor: '#fff', borderBottomWidth: 2, padding: 10, backgroundColor: '#4F8CAB' }}>
@@ -190,6 +204,7 @@ const LobbyPage = (props) => {
         )
     }
 
+    //Function leave/delete a lobby
     const quitLobby = () => {
         console.log(lobby)
 
@@ -207,18 +222,22 @@ const LobbyPage = (props) => {
             }
         })
     }
+
+
     const quitYourLobby = () => {
         deleteLobby(token)
         props.navigation.navigate('Homepage')
     }
-    const startGame = () => {
 
-        const message = {
+
+    //Check if the error was here, my darling
+    const startGame = () => {
+        props.navigation.navigate('Gamepage', { myIdProps: id })
+        /* const message = {
             user_id: id,
             method: "startMatch"
         }
-        sendMessage(message);
-
+        sendMessage(message);*/
     }
 
     return (
