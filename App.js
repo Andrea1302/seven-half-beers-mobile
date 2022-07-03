@@ -5,7 +5,6 @@ import EntryApp from './EntryApp.jsx';
 // styles
 import styleApp from './styles/styleApp.js';
 
-
 export default function App() {
   return (
 

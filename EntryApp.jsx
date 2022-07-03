@@ -15,9 +15,6 @@ import LobbyPage from './screens/LobbyPage';
 import LeaderboardPage from './screens/LeaderboardPage';
 
 
-
-
-
 const EntryApp = () => {
     const Stack = createStackNavigator();
     const [state, setState] = useState({

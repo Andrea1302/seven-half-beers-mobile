@@ -20,9 +20,9 @@ const Homepage = (props) => {
             userData: user
         })
     }
-    const navigatTo = (params, infoLobby) => {
+    const navigatTo = (params) => {
         //console.log(params, 'idLobby', idLobby)
-        props.navigation.navigate(params, { roomId: infoLobby.idLobby, playerList : infoLobby })
+        props.navigation.navigate('LobbyPage')
     }
 
     const logout = async () => {
@@ -44,3 +44,4 @@ const Homepage = (props) => {
 }
 
 export default Homepage
+

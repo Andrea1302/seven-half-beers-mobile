@@ -3,11 +3,6 @@ import { Login } from "seven-half-beers";
 import { setStorage } from "seven-half-beers/dist/utils/asyncStorage";
 import { getUserInfo } from "seven-half-beers/dist/services/api/auth/authApi"
 const LoginPage = (props) => {
-    // async function goTo(params) {
-    //     console.log(params, 'ciao')
-    // let user = await getStorage('user')
-    // console.log(user)
-    // }
 
     const goTo = () => {
         props.navigation.navigate('RegistrationPage')
