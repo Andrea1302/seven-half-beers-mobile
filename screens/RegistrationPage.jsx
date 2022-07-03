@@ -30,12 +30,13 @@ const RegistrationPage = (props) => {
             alert('error')
         }
 
-        //Function Go To Login
-        const goTo = () => {
-            props.navigation.navigate("Login")
-        }
-
     }
+
+    //Function Go To Login
+    const goTo = () => {
+        props.navigation.navigate("Login")
+    }
+
     return (
         <Registration callback={register} goToLogin={goTo} />
     )
