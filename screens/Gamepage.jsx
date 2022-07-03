@@ -22,7 +22,9 @@ const Gamepage = (props) => {
         counter: 0,
         frame: 71,
         isMyTurn: false,
-        myIndex: undefined
+        myIndex: undefined,
+        isFinishGame: false,
+        winners: undefined
     })
 
     const myRef = useRef([])
@@ -31,8 +33,16 @@ const Gamepage = (props) => {
     useEffect(() => {
         console.log("ciao, sono dentro il didUpdate del game")
         WS.onmessage = (event) => {
+
             console.log('onmessage', JSON.parse(event.data));
             let lobby = JSON.parse(event.data)
+            if (lobby?.winners?.length > 0) {
+                setState({
+                    ...state,
+                    isFinishGame: true,
+                    winners: lobby.winners
+                })
+            }
             let index = lobby?.hands.findIndex(el => el?.turn === true)
 
             console.log('index', index)
@@ -187,59 +197,72 @@ const Gamepage = (props) => {
 
     //JSX Return
     return (
-        <ImageBackground
-            source={{ uri: 'https://i.gifer.com/OfmI.gif' }} style={{
-                height: Dimensions.get('screen').height,
-                width: Dimensions.get('screen').width,
-            }}
-        >
-
-
-            <View style={{ backgroundColor: "brown", alignItems: 'center', width: 150, paddingVertical: 20 }}>
-                {
-                    state?.dataFromServer?.hands.map(renderPlayer)
-                }
-            </View>
+        <>
             {
-                state.isMyTurn ?
-                    <>
-                        <View style={{
-                            alignItems: 'center',
-                            flex: 1,
-                            justifyContent: 'center',
-                        }}>
-                            <Lottie
-                                ref={el => myRef.current[state.myIndex] = el}
-                                source={require('../assets/lottie/beer.json')}
-                                style={{ width: 100, height: 100 }}
-                                loop={false}
-                            />
-                        </View>
+                !state.isFinishGame ?
+                    <ImageBackground
+                        source={{ uri: 'https://i.gifer.com/OfmI.gif' }} style={{
+                            height: Dimensions.get('screen').height,
+                            width: Dimensions.get('screen').width,
+                        }}
+                    >
 
-                        <View style={{ flexDirection: 'row', position: 'absolute', bottom: 150 }}>
 
-                            <Button label="Stop" callback={stop} />
-                            <Button label="Carta" callback={card} />
-                            <Button label="Quit match" callback={quitMatch} />
-
-                        </View>
-                    </> :
-                    <View>
-                        <Text>Please wait your turn or the end of game</Text>
-                        <Button label="Quit match" callback={quitMatch} />
-                        <Button label="Quit match" callback={()=>sendMessage(
+                        <View style={{ backgroundColor: "brown", alignItems: 'center', width: 150, paddingVertical: 20 }}>
                             {
-                                user_id: myId,
-                                method: "requestCard"
+                                state?.dataFromServer?.hands.map(renderPlayer)
                             }
-                        )} />
+                        </View>
+                        {
+                            state.isMyTurn ?
+                                <>
+                                    <View style={{
+                                        alignItems: 'center',
+                                        flex: 1,
+                                        justifyContent: 'center',
+                                    }}>
+                                        <Lottie
+                                            ref={el => myRef.current[state.myIndex] = el}
+                                            source={require('../assets/lottie/beer.json')}
+                                            style={{ width: 100, height: 100 }}
+                                            loop={false}
+                                        />
+                                    </View>
+
+                                    <View style={{ flexDirection: 'row', position: 'absolute', bottom: 150 }}>
+
+                                        <Button label="Stop" callback={stop} />
+                                        <Button label="Carta" callback={card} />
+                                        <Button label="Quit match" callback={quitMatch} />
+
+                                    </View>
+                                </> :
+                                <View>
+                                    <Text>Please wait your turn or the end of game</Text>
+                                    <Button label="Quit match" callback={quitMatch} />
+                                    <Button label="Quit match" callback={() => sendMessage(
+                                        {
+                                            user_id: myId,
+                                            method: "requestCard"
+                                        }
+                                    )} />
 
 
+                                </View>
+
+                        }
+
+                    </ImageBackground > :
+                    <View>
+                        {
+                            state?.winners?.map((player, key) => {
+                                <Text key={key + 1000}>The winner is / are : {player.username}</Text>
+                            })
+                        }
                     </View>
-
             }
+        </>
 
-        </ImageBackground >
 
 
     )
