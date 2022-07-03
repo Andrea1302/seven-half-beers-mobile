@@ -21,8 +21,15 @@ const Homepage = (props) => {
         })
     }
     const navigatTo = (params) => {
+
+        if (params === 'LeaderboardPage') {
+            props.navigation.navigate(params, { playerList: state.userData.id })
+
+        } else {
+            props.navigation.navigate(params)
+
+        }
         //console.log(params, 'idLobby', idLobby)
-        props.navigation.navigate('LobbyPage')
     }
 
     const logout = async () => {
