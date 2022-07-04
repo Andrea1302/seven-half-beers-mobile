@@ -30,7 +30,6 @@ const Gamepage = (props) => {
 
     const myRef = useRef([])
 
-
     useEffect(() => {
         WS.onmessage = (event) => {
 
@@ -45,13 +44,23 @@ const Gamepage = (props) => {
                 WS.close()
                 return
             }
+
             let index = lobby?.hands.findIndex(el => el?.turn === true)
+            console.log("Turno: ", index)
+
             let myIndex = lobby?.hands.findIndex(el => el?.user.id === myId)
 
             let myTurn = checkMyTurn(lobby, index, myId);
             let variable = valueLogicLottie(lobby, index);
 
-            myRef?.current[index]?.play(state.frame, state.frame + variable)
+            if (index === 0) {
+                myRef?.current[index]?.play(state.frame, state.frame + variable)
+            } else {
+                myRef?.current[index - 1]?.play(state.frame, state.frame + variable)
+            }
+
+            //myRef?.current[index]?.play(state.frame, state.frame + variable)
+
             setState({
                 ...state,
                 frame: lobby?.hands[index].cardValue > 7.5 ? 71 : state.frame + variable,
@@ -63,6 +72,7 @@ const Gamepage = (props) => {
         }
 
     }, [WS.onmessage])
+
 
     WS.onclose = (event) => {
         console.log(event, 'event')
@@ -85,16 +95,16 @@ const Gamepage = (props) => {
                 style={{
                     alignItems: "center",
                     marginHorizontal: 10,
-                    borderRightColor :'#fff',
-                    borderRightWidth : 2,
-                    paddingRight : 20
+                    borderRightColor: '#fff',
+                    borderRightWidth: 2,
+                    paddingRight: 20
                 }}>
-                {/* <Lottie
+                <Lottie
                     ref={el => myRef.current[key] = el}
                     source={require('../assets/lottie/beer.json')}
                     style={{ height: 50 }}
                     loop={false}
-                /> */}
+                />
                 {
                     player?.cards?.length >= 1 ?
                         <View style={{ flexDirection: 'row' }}>
@@ -140,6 +150,9 @@ const Gamepage = (props) => {
     }
 
     const card = () => {
+
+
+
         const message = {
             user_id: myId,
             method: "requestCard"
@@ -159,11 +172,14 @@ const Gamepage = (props) => {
 
     // function to stop playing
     const stop = () => {
+
         const message = {
             user_id: myId,
             method: "stopPlaying"
         }
+
         sendMessage(message);
+
         setTimeout(() => {
             const message = {
                 user_id: myId,
@@ -171,10 +187,11 @@ const Gamepage = (props) => {
             }
             sendMessage(message)
         }, 100);
-        setState({
-            ...state,
-            frame: 71
-        })
+
+        /*       setState({
+                  ...state,
+                  frame: 71
+              }) */
     }
 
 
@@ -227,13 +244,13 @@ const Gamepage = (props) => {
                                         <Lottie
                                             ref={el => myRef.current[state.myIndexInArray] = el}
                                             source={require('../assets/lottie/beer.json')}
-                                            style={{ width: 100, height: 100 ,backgroundColor:'rgba(61, 52, 25, 0.6)'}}
+                                            style={{ width: 100, height: 100, backgroundColor: 'rgba(61, 52, 25, 0.6)' }}
                                             loop={false}
                                         />
                                         <Text style={{ color: '#fff', fontWeight: 'bold' }}>{state?.dataFromServer?.hands[state?.myIndexInArray]?.cardValue}</Text>
                                     </View>
 
-                                    <View style={{ flexDirection: 'row',  bottom: 150,justifyContent:'center' }}>
+                                    <View style={{ flexDirection: 'row', bottom: 150, justifyContent: 'center' }}>
 
                                         <Button label="Stop" callback={stop} />
                                         <Button label="Carta" callback={card} />
@@ -241,7 +258,7 @@ const Gamepage = (props) => {
 
                                     </View>
                                 </> :
-                                <View style={{flex:.8,justifyContent:'flex-end'}}>
+                                <View style={{ flex: .8, justifyContent: 'flex-end' }}>
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>Please wait your turn or the end of the game</Text>
                                     <Button label="Quit match" callback={quitMatch} />
                                 </View>

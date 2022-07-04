@@ -10,6 +10,7 @@ let token;
 let id;
 let lobby;
 let lobbyToSearch;
+
 const LobbyPage = (props) => {
 
     //iife
@@ -23,6 +24,7 @@ const LobbyPage = (props) => {
     const [state, setState] = useState({
         dataFromServer: undefined,
         createdLobby: false,
+        isPublic: false
     })
 
     //DidMount
@@ -241,6 +243,24 @@ const LobbyPage = (props) => {
         lobbyToSearch = parseInt(e)
     }
 
+
+    //Change access type
+    const changeAccessType = () => {
+
+        const message = {
+            user_id: id,
+            method: "changeLobbyAccess",
+            accessType: !state.isPublic
+        }
+
+        //sendMessage(message);
+
+        setState({
+            ...state,
+            isPublic: !state.isPublic
+        })
+    }
+
     return (
         <>
             <View style={{ backgroundColor: '#61B5D9', height: Dimensions.get('screen').height, paddingVertical: 20 }}>
@@ -251,12 +271,9 @@ const LobbyPage = (props) => {
                         <Button label="crea lobby" callback={create} />
                         <Button label="random lobby" callback={randomLobbyF} />
                         <View style={{ alignItems: 'center', marginVertical: 36 }}>
-                            <TextInput placeholder={'Insert ID Lobby'} onChangeText={selectLobby} style={{ width: 200, backgroundColor: '#fff', padding: 10 }} />
+                            <TextInput placeholder={'Insert ID Lobby'} onChangeText={selectLobby} style={{ width: 200, backgroundColor: '#fff', padding: 15, borderRadius: 20, marginBottom: 10 }} />
                             <Button label="Search lobby" callback={search} />
                         </View>
-
-
-
 
                     </> :
 
@@ -266,9 +283,13 @@ const LobbyPage = (props) => {
                         {state.dataFromServer.users?.map(renderPlayer)}
 
                         {
-                            ((state.dataFromServer.users?.length > 1) && (id == state.dataFromServer.users[0].id)) &&
+                            id == state.dataFromServer.users[0].id &&
                             <View style={{ alignItems: 'center', marginTop: 10 }}>
-                                <Button styleCustom={{ width: 100, backgroundColor: '#4F8CAB', alignItems: 'center', padding: 10, borderRadius: 5 }} label='Start' callback={startGame} />
+                                <Button styleCustom={{ width: 100, backgroundColor: '#4B5AB8', alignItems: 'center', padding: 10, borderRadius: 5, marginBottom: 10 }} label={state.isPublic ? 'Public' : 'Private'} callback={changeAccessType} />
+                                {
+                                    state.dataFromServer.users?.length > 1 &&
+                                    <Button styleCustom={{ width: 100, backgroundColor: '#4F8CAB', alignItems: 'center', padding: 10, borderRadius: 5 }} label='Start' callback={startGame} />
+                                }
                             </View>
 
                         }
