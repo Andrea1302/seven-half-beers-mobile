@@ -252,7 +252,7 @@ const LobbyPage = (props) => {
                         <Button label="random lobby" callback={randomLobbyF} />
                         <View style={{ alignItems: 'center', marginVertical: 36 }}>
                             <TextInput placeholder={'Insert ID Lobby'} onChangeText={selectLobby} style={{ width: 200, backgroundColor: '#fff', padding: 10 }} />
-                            <Button label="searclobby" callback={search} />
+                            <Button label="Search lobby" callback={search} />
                         </View>
 
 
@@ -268,7 +268,7 @@ const LobbyPage = (props) => {
                         {
                             ((state.dataFromServer.users?.length > 1) && (id == state.dataFromServer.users[0].id)) &&
                             <View style={{ alignItems: 'center', marginTop: 10 }}>
-                                <Button styleCustom={{ width: 100, backgroundColor: '#4F8CAB', alignItems: 'center', padding: 10, borderRadius: 5 }} label='START' callback={startGame} />
+                                <Button styleCustom={{ width: 100, backgroundColor: '#4F8CAB', alignItems: 'center', padding: 10, borderRadius: 5 }} label='Start' callback={startGame} />
                             </View>
 
                         }
