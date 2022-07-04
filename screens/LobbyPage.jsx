@@ -262,6 +262,7 @@ const LobbyPage = (props) => {
 
                     <View>
                         <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 36, color: '#fff', marginBottom: 10 }}>LOBBY PLAYERS : {state.dataFromServer.users.length}</Text>
+                        <Text style={{ textAlign: 'center', fontWeight: 'bold', fontSize: 18, color: '#fff', marginBottom: 10 }}>LOBBY N° : {state.dataFromServer?.idLobby}</Text>
                         {state.dataFromServer.users?.map(renderPlayer)}
 
                         {
