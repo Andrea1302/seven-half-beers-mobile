@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Home } from "seven-half-beers";
-import { ActivityIndicator, Text } from 'react-native'
+import { ActivityIndicator, Dimensions, Text, View } from 'react-native'
 
 
 //Storage
@@ -42,7 +42,9 @@ const Homepage = (props) => {
             {
                 state.userData === undefined ?
                     <ActivityIndicator></ActivityIndicator> :
+
                     <Home mobileUser={state.userData} goTo={navigatTo} logoutCallback={logout} />
+
 
             }
         </>

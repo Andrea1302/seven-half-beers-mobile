@@ -285,7 +285,7 @@ const LobbyPage = (props) => {
                         {
                             id == state.dataFromServer.users[0].id &&
                             <View style={{ alignItems: 'center', marginTop: 10 }}>
-                                <Button styleCustom={{ width: 100, backgroundColor: '#4B5AB8', alignItems: 'center', padding: 10, borderRadius: 5, marginBottom: 10 }} label={state.isPublic ? 'Public' : 'Private'} callback={changeAccessType} />
+                                <Button styleCustomText={{color: '#4F8CAB',fontWeight:'bold'}} styleCustom={{ width: 100, backgroundColor: '#fff', alignItems: 'center', padding: 10, borderRadius: 5, marginBottom: 10 }} label={state.isPublic ? 'Public' : 'Private'} callback={changeAccessType} />
                                 {
                                     state.dataFromServer.users?.length > 1 &&
                                     <Button styleCustom={{ width: 100, backgroundColor: '#4F8CAB', alignItems: 'center', padding: 10, borderRadius: 5 }} label='Start' callback={startGame} />

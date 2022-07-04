@@ -4,6 +4,7 @@ import { Registration } from "seven-half-beers";
 //Storage
 import { setStorage } from "seven-half-beers/dist/utils/asyncStorage";
 import { getUserInfo } from "seven-half-beers/dist/services/api/auth/authApi"
+import { Dimensions } from "react-native";
 
 const RegistrationPage = (props) => {
 
@@ -33,7 +34,7 @@ const RegistrationPage = (props) => {
     }
 
     return (
-        <Registration callback={register} />
+        <Registration containerStyle={{width:Dimensions.get('screen').width -50, marginBottom : 120}} callback={register} />
     )
 }
 

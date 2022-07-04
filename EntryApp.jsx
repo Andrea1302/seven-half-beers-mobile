@@ -54,11 +54,11 @@ const EntryApp = () => {
                                 component={Homepage}
                                 options={
                                     {
-                                        title: 'Homepage',
+                                        title: 'Home',
                                         headerStyle: {
-                                            backgroundColor: '#000',
+                                            backgroundColor: '#e5be01',
                                         },
-                                        headerTintColor: '#007AFF',
+                                        headerTintColor: '#fff',
                                         headerTitleStyle: {
                                             fontWeight: 'bold',
                                             fontSize: 24,
@@ -74,9 +74,9 @@ const EntryApp = () => {
                                     {
                                         title: 'Leaderboard',
                                         headerStyle: {
-                                            backgroundColor: '#000',
+                                            backgroundColor: '#4F8CAB',
                                         },
-                                        headerTintColor: '#007AFF',
+                                        headerTintColor: '#fff',
                                         headerTitleStyle: {
                                             fontWeight: 'bold',
                                             fontSize: 24,
@@ -91,11 +91,11 @@ const EntryApp = () => {
                                 options={
                                     
                                     {
-                                        title: 'LoginPage',
+                                        title: 'Login',
                                         headerStyle: {
-                                            backgroundColor: '#000',
+                                            backgroundColor: '#e5be01',
                                         },
-                                        headerTintColor: '#007AFF',
+                                        headerTintColor: '#fff',
                                         headerTitleStyle: {
                                             fontWeight: 'bold',
                                             fontSize: 24,
@@ -109,11 +109,11 @@ const EntryApp = () => {
                                 component={LobbyPage}
                                 options={
                                     {
-                                        title: 'LobbyPage',
+                                        title: 'Lobby',
                                         headerStyle: {
-                                            backgroundColor: '#000',
+                                            backgroundColor: '#4F8CAB',
                                         },
-                                        headerTintColor: '#007AFF',
+                                        headerTintColor: '#fff',
                                         headerTitleStyle: {
                                             fontWeight: 'bold',
                                             fontSize: 24,
@@ -127,11 +127,11 @@ const EntryApp = () => {
                                 component={RegistrationPage}
                                 options={
                                     {
-                                        title: 'RegistrationPage',
+                                        title: 'Registration',
                                         headerStyle: {
-                                            backgroundColor: '#000',
+                                            backgroundColor: '#e5be01',
                                         },
-                                        headerTintColor: '#007AFF',
+                                        headerTintColor: '#fff',
                                         headerTitleStyle: {
                                             fontWeight: 'bold',
                                             fontSize: 24,
@@ -147,11 +147,11 @@ const EntryApp = () => {
                                 component={Gamepage}
                                 options={
                                     {
-                                        title: 'Gamepage',
+                                        title: 'Game',
                                         headerStyle: {
-                                            backgroundColor: '#000',
+                                            backgroundColor: '#e5be01',
                                         },
-                                        headerTintColor: '#007AFF',
+                                        headerTintColor: '#fff',
                                         headerTitleStyle: {
                                             fontWeight: 'bold',
                                             fontSize: 24,

@@ -226,7 +226,7 @@ const Gamepage = (props) => {
                     >
 
                         <View style={{ backgroundColor: "rgba(61, 52, 25, 0.6)", paddingVertical: 20 }}>
-                            <ScrollView con horizontal={true} >
+                            <ScrollView horizontal={true} >
                                 {
                                     state?.dataFromServer?.hands.map(renderPlayer)
                                 }
@@ -252,37 +252,40 @@ const Gamepage = (props) => {
 
                                     <View style={{ flexDirection: 'row', bottom: 150, justifyContent: 'center' }}>
 
-                                        <Button label="Stop" callback={stop} />
-                                        <Button label="Carta" callback={card} />
-                                        <Button label="Quit match" callback={quitMatch} />
+                                        <Button label="Bastaaa!" callback={stop} />
+                                        <Button label="Versa !" callback={card} />
+                                        <Button label="Meglio che esca" callback={quitMatch} />
 
                                     </View>
                                 </> :
                                 <View style={{ flex: .8, justifyContent: 'flex-end' }}>
                                     <Text style={{ textAlign: 'center', color: '#fff', fontWeight: 'bold' }}>Please wait your turn or the end of the game</Text>
-                                    <Button label="Quit match" callback={quitMatch} />
+                                    <Button label="Meglio che esca" callback={quitMatch} />
                                 </View>
 
                         }
 
                     </ImageBackground > :
                     <View style={{ height: Dimensions.get('screen').height, alignItems: 'center', justifyContent: 'center' }}>
-                        {
-                            state?.winners?.map((player, key) => {
-                                return (
-                                    <View key={key}>
-                                        <Lottie
-                                            source={require('../assets/lottie/winner.json')}
-                                            style={{ height: 200 }}
-                                            loop={true}
-                                            autoPlay={true}
-                                        />
+                        <ScrollView horizontal={true} >
+                            {
+                                state?.winners?.map((player, key) => {
 
-                                        <Text style={{ color: '#000' }} key={key + 1000}>The winner is / are : {player.username}</Text>
-                                    </View>
-                                )
-                            })
-                        }
+                                    return (
+                                        <View key={key} style={{ marginHorizontal: 15 }}>
+                                            <Lottie
+                                                source={require('../assets/lottie/winner.json')}
+                                                style={{ height: 200 }}
+                                                loop={true}
+                                                autoPlay={true}
+                                            />
+
+                                            <Text style={{ color: '#000' }} key={key + 1000}>The winner is : {player.username}</Text>
+                                        </View>
+                                    )
+                                })
+                            }
+                        </ScrollView>
                     </View>
             }
         </>

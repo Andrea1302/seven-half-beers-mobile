@@ -2,6 +2,7 @@ import React from "react";
 import { Login } from "seven-half-beers";
 import { setStorage } from "seven-half-beers/dist/utils/asyncStorage";
 import { getUserInfo } from "seven-half-beers/dist/services/api/auth/authApi"
+import { Dimensions } from "react-native";
 const LoginPage = (props) => {
 
     const goTo = () => {
@@ -26,7 +27,7 @@ const LoginPage = (props) => {
         }
     }
     return (
-        <Login callback={login} goToRegistration={goTo} />
+        <Login containerStyle={{width:Dimensions.get('screen').width -50,marginBottom : 120}} callback={login} goToRegistration={goTo} />
     )
 }
 
